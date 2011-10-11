@@ -1,0 +1,13 @@
+# IDE #
+###################
+.classpath
+.settings
+.externalToolBuilders
+ 
+# Compiled source #
+###################
+target
+dist
+bin
+.class
+ 
