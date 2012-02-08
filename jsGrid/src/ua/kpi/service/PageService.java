@@ -19,7 +19,6 @@ public class PageService {
 	public Page getPage() {
 		int iattempt = 0;
 		String page = "http://www.oracle.com/";
-		LOG.info("Server start working with new node from " + page);
 		String source = getPageHtmlSource(page);
 		while (source.length() == 1) {
 			page = "http://www.oracle.com/";

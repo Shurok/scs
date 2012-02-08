@@ -5,6 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<annotation-driven />
 	<context:component-scan base-package="ua.kpi.scs.controller" />
+	<context:component-scan base-package="ua.kpi.service" />
 
 
 	<beans:bean id="viewResolver"

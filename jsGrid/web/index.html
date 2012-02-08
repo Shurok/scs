@@ -58,13 +58,13 @@
 		};
 	}
 
+
 	function getURLs(parent) {
-		locationUrl = location.href.replace("index.html", "");
-		locationDomain = location.origin;
-		aElements = $("a");
-		len = aElements.length;
-		hrefListUnique = new Array();
-		hrefList = new Array(len);
+		var locationUrl = location.href.replace("index.html", "");
+		var locationDomain = location.origin;
+		var aElements = $("a");
+		var len = aElements.length;
+		var hrefList = new Array(len);
 		for ( var i = 0; i < len; ++i) {
 			hrefList[i] = aElements[i].href.replace(/#.*/, "");
 			if (hrefList[i].startsWith(locationUrl)) {
@@ -72,9 +72,9 @@
 			} else if (hrefList[i].startsWith(locationDomain)) {
 				hrefList[i] = hrefList[i].replace(locationDomain + "/", parent);
 			}
-			hrefListUnique = jQuery.unique(hrefList);
+			
 		}
-		return hrefListUnique;
+		return jQuery.unique(hrefList);;
 	}
 </script>
 </head>

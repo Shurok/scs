@@ -4,6 +4,10 @@ public class Page {
 	private String url;
 	private String source;
 
+	public Page() {
+
+	}
+
 	public Page(String url, String source) {
 		this.url = url;
 		this.source = source;
