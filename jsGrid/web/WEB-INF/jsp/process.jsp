@@ -9,14 +9,21 @@
 
 <script>
 	logiInfo = true;
-	
-	
+
+	function setUrl(url) {
+		$.post("setUrl.htm", {
+			"urlToDb" : url
+		}, function(data) {
+			alert("seted");
+		});
+	}
+
 	function startDb() {
 		$.post("startDb.htm", {}, function(data) {
 			alert("started");
 		});
 	}
-	
+
 	function startNode() {
 		callTime = new Date().getTime();
 		$.post("getpage.htm", {}, function(data) {
@@ -37,11 +44,13 @@
 			page.source = page.source.replace(/style=.*?"/gi, "src=''");
 			page.source = page.source.replace(/href="javascript:.*?"/gi, "");
 			page.source = page.source.replace(/href='javascript:.*?'/gi, "");
+			page.source = page.source.replace(/href="skype:.*?"/gi, "");
+			page.source = page.source.replace(/href='skype:.*?'/gi, "");
 			$('#bufHtml')[0].innerHTML = page.source;
 			$('#url')[0].value = (page.url);
 			var response = new Object();
 			response.url = page.url;
-			var urls = getURLs(page.url)
+			var urls = getURLs(page.url.match(/.*:\/\/.*?\//i)[0]);
 			response.urls = JSON.stringify(urls);
 
 			//get Content worlds
@@ -53,14 +62,14 @@
 				var totalTime = currentTime.getTime() - callTime;
 				$("#console")[0].value += "\n\n " + currentTime;
 				$("#console")[0].value += "\n Request Processed " + page.url;
-				$("#console")[0].value += "  "+ urls.length + "unical links found.";
+				$("#console")[0].value += "  " + urls.length
+						+ " unical links found.";
 				$("#console")[0].value += " Time for processing = "
 						+ processingTime;
 				$("#console")[0].value += "\n Total time = " + totalTime;
-				$('#bufHtml')[0].innerHTML = "";
-				$("textarea")[0].scrollByLines(6);
+			//	$("textarea")[0].scrollByPages(1);
 			}
-
+			$('#bufHtml')[0].innerHTML = "";
 			callTime = new Date().getTime();
 			$.post("setresalt.htm", response, function(data) {
 				processHTML(data.page);
@@ -90,15 +99,21 @@
 
 		}
 		return jQuery.unique(hrefList);
-		;
+		
 	}
 </script>
 </head>
 <body>
     <b onclick="startNode(); return false;">Process Page</b>
     <br />
-    
+
     <b onclick="startDb(); return false;">Start Db</b>
+    <br />
+
+    <input type="text" id="setUrl" value="http://vk.com/id1" />
+    <input type="button" id="setUrlBtn" onclick="setUrl($('#setUrl')[0].value); return false;" value="Set Url" />
+    <br />
+    <b onclick="setUrl('http://bigmir.net'); return false;">set bigmir to db</b>
     <br />
     <input id="url" type="text"></input>
     <textarea id="console" style="width: 735px; height: 311px;"></textarea>

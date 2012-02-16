@@ -28,6 +28,15 @@ public class GridController {
 		return "process";
 	}
 
+	@RequestMapping(value = "setUrl.htm")
+	public @ResponseBody
+	final Map<String, Object> setUrl(final HttpServletRequest request) {
+		String urlStr = request.getParameter("urlToDb");
+		final Map<String, Object> response = new HashMap<String, Object>();
+		dbPageService.setUrlToDb(urlStr);
+		return response;
+	}
+
 	@RequestMapping(value = "startDb.htm")
 	public @ResponseBody
 	final Map<String, Object> startDb(final HttpServletRequest request) {

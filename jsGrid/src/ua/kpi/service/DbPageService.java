@@ -22,9 +22,15 @@ public class DbPageService {
 	private UrlDaoImpl dao;
 
 	public Page getPage() {
+		String pageSource = null;
+
 		Page page = new Page();
-		page.setUrl(dao.findAddressToParse());
-		page.setSource(getPageHtmlSource(page.getUrl()));
+		while ((pageSource == null) || (pageSource.length() == 0)) {
+
+			page.setUrl(dao.findAddressToParse());
+			pageSource = getPageHtmlSource(page.getUrl());
+		}
+		page.setSource(pageSource);
 		return page;
 
 	}
@@ -51,10 +57,10 @@ public class DbPageService {
 	}
 
 	public void setResponse(PageResponse pageResponse) {
-
 		String[] urls = pageResponse.getUrls();
 		for (int i = 0; i < urls.length; i++) {
-			if ((urls[i] == null) || (urls[i].length() > Url.MAX_URL_LENGTH)
+			if ((urls[i] == null) || (urls[i].length() == 0)
+					|| (urls[i].length() > Url.MAX_URL_LENGTH)
 					|| (urls[i] == "")) {
 				LOG.info("Cannot save URL " + urls[i]);
 
